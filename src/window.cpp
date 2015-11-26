@@ -99,7 +99,7 @@ public:
         glfwSetClipboardString(glfw_window.get(), new_clipboard_string.c_str());
     }
 
-  private:
+private:
     std::unique_ptr<GLFWwindow, glfw_window_deleter> glfw_window;
 
     static void set_scroll_offset(GLFWwindow* window_ptr, double new_scroll_offset, double) noexcept {
@@ -109,8 +109,9 @@ public:
     static void set_focused(GLFWwindow* window_ptr, int is_window_in_focus) {
         static_cast<window_impl*>(glfwGetWindowUserPointer(window_ptr))->focused_ = is_window_in_focus;
     }
+
     double scroll_offset_ = 0;
-    bool focused_         = false;
+    bool focused_ = false;
 };
 
 window::window(unsigned int width, unsigned int height, const std::string& title, bool fullscreen, bool resizable)
@@ -135,6 +136,7 @@ void window::make_current() noexcept {
 void window::resize(unsigned int width, unsigned int height) noexcept {
     window_impl_->resize(width, height);
 }
+
 void window::title(const std::string& new_title) {
     window_impl_->title(new_title);
 }
@@ -146,6 +148,7 @@ bool window::button_is_pressed(button button_) const noexcept {
 double window::scroll_offset() const noexcept {
     return window_impl_->scroll_offset();
 }
+
 bool window::focused() const noexcept {
     return window_impl_->focused();
 }
@@ -153,6 +156,7 @@ bool window::focused() const noexcept {
 cursor_pos window::cursor_position() const noexcept {
     return window_impl_->cursor_position();
 }
+
 void window::cursor_position(cursor_pos cursor_pos_) noexcept {
     window_impl_->cursor_position(cursor_pos_);
 }
@@ -165,5 +169,5 @@ void window::clipboard_string(const std::string& new_clipboard_string) {
     window_impl_->clipboard_string(new_clipboard_string);
 }
 
-unsigned int window::reference_count           = 0;
+unsigned int window::reference_count = 0;
 std::unique_ptr<window> window::current_window = nullptr;
