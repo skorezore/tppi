@@ -1,0 +1,35 @@
+sudo: false
+language: generic
+
+cache:
+  apt: true
+  directories: /tmp/tools
+
+matrix:
+  include:
+    - env: CC=gcc-5 CXX=g++-5
+      addons:
+        apt:
+          packages: g++-5
+          sources: ubuntu-toolchain-r-test
+    - env: CC=clang-3.8 CXX=clang++-3.8
+      addons:
+        apt:
+          packages: clang-3.8
+          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-precise']
+
+before_install:
+  - export PATH="$HOME/bin:$PATH"
+  - mkdir -p ~/bin /tmp/tools
+  - wget --no-check-certificate --no-clobber -O /tmp/tools/cmake https://cmake.org/files/v3.4/cmake-3.4.0-rc3-Linux-x86_64.sh || true
+  - chmod -R +x /tmp/tools
+
+install: /tmp/tools/cmake --prefix="$HOME" --exclude-subdir
+
+before_script:
+  - mkdir build
+  - cd build
+
+script:
+  - cmake -G"Unix Makefiles" ..
+  - make
