@@ -1,0 +1,15 @@
+[submodule "deps/tinyobjloader"]
+	path = deps/tinyobjloader
+	url = https://github.com/syoyo/tinyobjloader
+[submodule "deps/stb"]
+	path = deps/stb
+	url = https://github.com/nothings/stb
+[submodule "deps/glm"]
+	path = deps/glm
+	url = https://github.com/g-truc/glm
+[submodule "deps/tdpi"]
+	path = deps/tdpi
+	url = https://github.com/skorezore/tdpi
+[submodule "deps/glfw"]
+	path = deps/glfw
+	url = https://github.com/glfw/glfw
