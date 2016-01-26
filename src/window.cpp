@@ -15,7 +15,7 @@
 #include <tdpi/tdpi.h>
 #include <GLFW/glfw3.h>
 
-#include "window.hpp"
+#include "tppi/window.hpp"
 
 using namespace tppi;
 
@@ -64,7 +64,7 @@ public:
     }
 
     void resize(unsigned int width, unsigned int height) noexcept { glfwSetWindowSize(glfw_window.get(), width, height); }
-    void set_title(const std::string& new_title) { glfwSetWindowTitle(glfw_window.get(), new_title.c_str()); }
+    void title(const std::string& new_title) { glfwSetWindowTitle(glfw_window.get(), new_title.c_str()); }
 
     bool button_is_pressed(unsigned int key) const noexcept { return glfwGetKey(glfw_window.get(), key); }
 
@@ -79,10 +79,10 @@ public:
         return cursor_pos_;
     }
 
-    void set_cursor_position(cursor_pos cursor_pos_) noexcept { glfwSetCursorPos(glfw_window.get(), cursor_pos_.x, cursor_pos_.y); }
+    void cursor_position(cursor_pos cursor_pos_) noexcept { glfwSetCursorPos(glfw_window.get(), cursor_pos_.x, cursor_pos_.y); }
 
     std::string clipboard_string() { return glfwGetClipboardString(glfw_window.get()); }
-    void set_clipboard_string(const std::string& new_clipboard_string) { glfwSetClipboardString(glfw_window.get(), new_clipboard_string.c_str()); }
+    void clipboard_string(const std::string& new_clipboard_string) { glfwSetClipboardString(glfw_window.get(), new_clipboard_string.c_str()); }
 private:
     std::unique_ptr<GLFWwindow, glfw_window_deleter> glfw_window;
 
@@ -112,7 +112,7 @@ void window::make_current() noexcept
 }
 
 void window::resize(unsigned int width, unsigned int height) noexcept { window_impl_ -> resize(width, height); }
-void window::set_title(const std::string& new_title) { window_impl_ -> set_title(new_title); }
+void window::title(const std::string& new_title) { window_impl_ -> title(new_title); }
 
 bool window::button_is_pressed(button button_) const noexcept { return window_impl_ -> button_is_pressed(static_cast<unsigned int>(button_)); }
 
@@ -120,10 +120,10 @@ double window::scroll_offset() const noexcept { return window_impl_ -> scroll_of
 bool window::focused() const noexcept { return window_impl_ -> focused(); }
 
 cursor_pos window::cursor_position() const noexcept { return window_impl_ -> cursor_position(); }
-void window::set_cursor_position(cursor_pos cursor_pos_) noexcept { window_impl_ -> set_cursor_position(cursor_pos_); }
+void window::cursor_position(cursor_pos cursor_pos_) noexcept { window_impl_ -> cursor_position(cursor_pos_); }
 
 std::string window::clipboard_string() { return window_impl_ -> clipboard_string(); }
-void window::set_clipboard_string(const std::string& new_clipboard_string) { window_impl_ -> set_clipboard_string(new_clipboard_string); }
+void window::clipboard_string(const std::string& new_clipboard_string) { window_impl_ -> clipboard_string(new_clipboard_string); }
 
 unsigned int window::reference_count = 0;
 std::unique_ptr<window> window::current_window = nullptr;

@@ -162,34 +162,28 @@ namespace tppi
     class window
     {
     public:
-        window(unsigned int width, unsigned int height, const std::string& title, bool fullscreen = false, bool resizable = false);
+        window(unsigned int width, unsigned int height, const std::string& title, bool fullscreen, bool resizable);
         ~window();
 
         void make_current() noexcept;
-        void resize() noexcept;
-        void set_title(std::string& new_title);
+        void resize(unsigned int width, unsigned int height) noexcept;
+        void title(const std::string& new_title);
 
         bool button_is_pressed(button button_) const noexcept;
 
         double scroll_offset() const noexcept;
-        bool is_in_focus() const noexcept;
+        bool focused() const noexcept;
 
         cursor_pos cursor_position() const noexcept;
-        void set_cursor_position(cursor_pos cursor_pos_) noexcept;
+        void cursor_position(cursor_pos cursor_pos_) noexcept;
 
         std::string clipboard_string();
-        void set_clipboard_string(const std::string& new_clipboard_string);
+        void clipboard_string(const std::string& new_clipboard_string);
     private:
         class window_impl;
         std::unique_ptr<window_impl> window_impl_;
 
         static unsigned int reference_count;
         static std::unique_ptr<window> current_window;
-
-        static void set_scroll_offset(double new_scroll_wheel_value) noexcept;
-        static void set_focus_flag(bool is_window_in_focus) noexcept;
-
-        static double scroll_wheel_value_;
-        static bool focus_flag;
     };
 }
