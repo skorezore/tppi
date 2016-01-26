@@ -94,7 +94,9 @@ private:
 
 window::window(unsigned int width, unsigned int height, const std::string& title, bool fullscreen, bool resizable) : window_impl_(std::make_unique<window_impl>(width, height, title, fullscreen, resizable))
 {
-    (reference_count > 1) ? throw std::runtime_error("Multiple windows aren't yet supported.") : reference_count++;
+    if (reference_count > 1)
+        throw std::runtime_error("Multiple windows aren't yet supported.");
+    ++reference_count;
     current_window.reset(this);
 }
 window::~window()
