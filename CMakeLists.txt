@@ -19,7 +19,7 @@ elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
     endif()
 
     set(CMAKE_CXX_FLAGS "-std=c++14 -O3 -Wall -Wextra -pedantic")
-    
+
     if(NOT BUILD_SHARED_LIBS)
         set(CMAKE_CXX_FLAGS "-std=c++14 -O3 -Wall -Wextra -pedantic -static")
     endif()
@@ -27,7 +27,7 @@ else()
     message(WARNING "You are using an unsupported compiler!")
 endif()
 
-file(GLOB tppi_source ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp)
+file(GLOB tppi_source ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp)
 add_library (tppi ${tppi_source})
 target_include_directories(tppi PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 

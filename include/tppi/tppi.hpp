@@ -10,7 +10,6 @@
   \_.-._  __...___.._______/
         ~~                   */
 
-namespace tppi
-{
-    void function();
-}
+#pragma once
+
+#include "tppi/window.hpp"
