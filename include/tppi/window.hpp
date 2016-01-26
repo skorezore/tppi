@@ -16,11 +16,9 @@
 #include <memory>
 #include <string>
 
-namespace tppi
-{
-    enum class button : unsigned int
-    {
-        keyboard_key_space      = 32,
+namespace tppi {
+    enum class button : unsigned int {
+        keyboard_key_space = 32,
         keyboard_key_apostrophe = 39,
         keyboard_comma          = 44,
         keyboard_minus          = 45,
@@ -154,14 +152,12 @@ namespace tppi
         mouse_eight = 1008
     };
 
-    struct cursor_pos
-    {
+    struct cursor_pos {
         double x, y;
     };
 
-    class window
-    {
-      public:
+    class window {
+    public:
         window(unsigned int width, unsigned int height, const std::string& title, bool fullscreen, bool resizable);
         ~window();
 
