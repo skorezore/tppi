@@ -28,7 +28,7 @@ else()
 endif()
 
 file(GLOB tppi_source ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp)
-add_library (tppi ${tppi_source})
+add_library(tppi ${tppi_source})
 target_include_directories(tppi PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(GLFW_BUILD_DOCS FALSE CACHE BOOL "")
