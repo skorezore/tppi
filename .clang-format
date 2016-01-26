@@ -1,0 +1,21 @@
+---
+Language                           : Cpp
+BasedOnStyle                       : LLVM
+AccessModifierOffset               : -4
+AlignAfterOpenBracket              : true
+AlignEscapedNewlinesLeft           : true
+AllowShortFunctionsOnASingleLine   : Empty
+AllowShortIfStatementsOnASingleLine: true
+AlwaysBreakTemplateDeclarations    : true
+ColumnLimit                        : 160
+ConstructorInitializerIndentWidth  : 6
+IndentCaseLabels                   : true
+MaxEmptyLinesToKeep                : 1
+KeepEmptyLinesAtTheStartOfBlocks   : false
+NamespaceIndentation               : All
+PointerAlignment                   : Left
+SpacesBeforeTrailingComments       : 2
+IndentWidth                        : 4
+UseTab                             : Never
+SpaceBeforeParens                  : ControlStatements
+...

@@ -175,6 +175,7 @@ namespace tppi {
 
         std::string clipboard_string();
         void clipboard_string(const std::string& new_clipboard_string);
+
     private:
         class window_impl;
         std::unique_ptr<window_impl> window_impl_;
