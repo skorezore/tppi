@@ -18,8 +18,8 @@
 
 namespace tppi {
     enum class button : unsigned int {
-        keyboard_key_space = 32,
-        keyboard_key_apostrophe = 39,
+        keyboard_space = 32,
+        keyboard_apostrophe = 39,
         keyboard_comma = 44,
         keyboard_minus = 45,
         keyboard_period = 46,
@@ -152,13 +152,24 @@ namespace tppi {
         mouse_eight = 1008
     };
 
+    enum class window_mode : unsigned int {
+        windowed,
+        windowed_borderless,
+        fullscreen
+    };
+
+    enum class resizable : bool {
+        yes = true,
+        no = false
+    };
+
     struct cursor_pos {
         double x, y;
     };
 
     class window {
     public:
-        window(unsigned int width, unsigned int height, const std::string& title, bool fullscreen, bool resizable);
+        window(unsigned int width, unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_);
         ~window();
 
         void make_current() noexcept;

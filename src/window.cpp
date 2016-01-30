@@ -25,7 +25,7 @@ struct glfw_window_deleter {
 
 class window::window_impl {
 public:
-    window_impl(unsigned int width, unsigned int height, const std::string& title, bool fullscreen, bool resizable) {
+    window_impl(unsigned int width, unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) {
         if (!glfwInit()) throw std::runtime_error("Failed to initialize GLFW.");
 
         glfwSetWindowUserPointer(glfw_window.get(), this);
@@ -36,9 +36,14 @@ public:
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-        glfwWindowHint(GLFW_RESIZABLE, (resizable ? GL_TRUE : GL_FALSE));
+        glfwWindowHint(GLFW_RESIZABLE, (static_cast<bool>(resizable_) ? GL_TRUE : GL_FALSE));
 
-        glfw_window.reset(glfwCreateWindow(width, height, title.c_str(), (fullscreen ? glfwGetPrimaryMonitor() : nullptr), nullptr));
+        if (window_mode_ == window_mode::windowed || window_mode_ == window_mode::fullscreen) glfw_window.reset(glfwCreateWindow(width, height, title.c_str(), (static_cast<bool>(window_mode_) ? glfwGetPrimaryMonitor() : nullptr), nullptr));
+        else {
+            glfwWindowHint(GLFW_DECORATED, GL_FALSE);
+            glfw_window.reset(glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr));
+        }
+
         if (!glfw_window.get()) throw std::runtime_error("Failed to create an OpenGL 3.3 context.");
 
         make_current();
@@ -86,7 +91,7 @@ private:
     bool focused_ = false;
 };
 
-window::window(unsigned int width, unsigned int height, const std::string& title, bool fullscreen, bool resizable) : window_impl_(std::make_unique<window_impl>(width, height, title, fullscreen, resizable)) {
+window::window(unsigned int width, unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) : window_impl_(std::make_unique<window_impl>(width, height, title, window_mode_, resizable_)) {
     if (reference_count > 0) throw std::runtime_error("Multiple windows aren't yet supported.");
 
     ++reference_count;
