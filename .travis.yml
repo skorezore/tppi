@@ -31,7 +31,7 @@ matrix:
 before_install:
   - export PATH="$HOME/bin:$PATH"
   - mkdir -p ~/bin /tmp/tools
-  - wget --no-check-certificate --no-clobber -O /tmp/tools/cmake https://cmake.org/files/v3.4/cmake-3.4.3-rc3-Linux-x86_64.sh || true
+  - wget --no-check-certificate --no-clobber -O /tmp/tools/cmake https://cmake.org/files/v3.4/cmake-3.4.3-Linux-x86_64.sh || true
   - chmod -R +x /tmp/tools
 
 install: /tmp/tools/cmake --prefix="$HOME" --exclude-subdir
