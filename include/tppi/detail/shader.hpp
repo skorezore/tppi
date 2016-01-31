@@ -80,7 +80,7 @@ namespace tppi {
 
         template<shader_type S>
         shader<S> shader_from_file(const std::string& path) {
-            return shader<S>(static_cast<std::stringstream*>(&operator<<(std::stringstream(), std::ifstream(source).rdbuf()))->str());
+            return shader<S>(static_cast<std::stringstream&>(std::stringstream() << std::ifstream(path).rdbuf()).str());
         }
     }
 }
