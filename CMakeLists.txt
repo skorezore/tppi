@@ -18,8 +18,8 @@ if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
 
     apply_compiler_flags()
 elseif("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.4)
-        message(FATAL_ERROR "Clang must be at least version 3.4!")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.6)
+        message(FATAL_ERROR "Clang must be at least version 3.6!")
     endif()
 
     apply_compiler_flags()

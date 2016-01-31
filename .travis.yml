@@ -17,11 +17,21 @@ matrix:
         apt:
           packages: clang-3.8
           sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-precise']
+    - env: CC=clang-3.7 CXX=clang++-3.7
+      addons:
+        apt:
+          packages: clang-3.7
+          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.7']
+    - env: CC=clang-3.6 CXX=clang++-3.6
+      addons:
+        apt:
+          packages: clang-3.6
+          sources: ['ubuntu-toolchain-r-test', 'llvm-toolchain-precise-3.6']
 
 before_install:
   - export PATH="$HOME/bin:$PATH"
   - mkdir -p ~/bin /tmp/tools
-  - wget --no-check-certificate --no-clobber -O /tmp/tools/cmake https://cmake.org/files/v3.4/cmake-3.4.0-rc3-Linux-x86_64.sh || true
+  - wget --no-check-certificate --no-clobber -O /tmp/tools/cmake https://cmake.org/files/v3.4/cmake-3.4.3-rc3-Linux-x86_64.sh || true
   - chmod -R +x /tmp/tools
 
 install: /tmp/tools/cmake --prefix="$HOME" --exclude-subdir
