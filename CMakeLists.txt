@@ -27,7 +27,7 @@ else()
     message(WARNING "You are using an unsupported compiler!")
 endif()
 
-file(GLOB tppi_source ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/detail/*.cpp)
+file(GLOB tppi_source ${CMAKE_CURRENT_SOURCE_DIR}/src/**.cpp)
 add_library(tppi ${tppi_source})
 target_include_directories(tppi PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
