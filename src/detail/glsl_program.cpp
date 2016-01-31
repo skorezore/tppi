@@ -39,7 +39,7 @@ glsl_program::glsl_program(const vertex_shader& vertex_shader_, const fragment_s
 
     if (log_length > 1) {
         info_log_.reserve(log_length);
-        glGetProgramInfoLog(program_handle, log_length, &log_length, &info_log_[0]);
+        glGetProgramInfoLog(program_handle, log_length, &log_length, &info_log_.front());
     }
 }
 
