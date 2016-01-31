@@ -12,8 +12,8 @@ macro(apply_compiler_flags)
 endmacro(apply_compiler_flags)
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5)
-        message(WARNING "GCC must be at least version 5!")
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 4.9)
+        message(WARNING "GCC must be at least version 4.9!")
     endif()
 
     apply_compiler_flags()
