@@ -53,21 +53,12 @@ namespace tppi {
                 other.compile_status = GL_FALSE;
             }
 
-            ~shader() {
-                glDeleteShader(shader_handle);
-            }
+            ~shader() { glDeleteShader(shader_handle); }
 
-            operator bool() const noexcept {
-                return compile_status == GL_TRUE;
-            }
+            operator bool() const noexcept { return compile_status == GL_TRUE; }
+            operator GLuint() const noexcept { return shader_handle; }
 
-            operator GLuint() const noexcept {
-                return shader_handle;
-            }
-
-            const std::string& info_log() const noexcept {
-                return info_log_;
-            }
+            const std::string& info_log() const noexcept { return info_log_; }
         private:
             GLuint shader_handle;
 
@@ -79,8 +70,6 @@ namespace tppi {
         using fragment_shader = shader<shader_type::fragment>;
 
         template<shader_type S>
-        shader<S> shader_from_file(const std::string& path) {
-            return shader<S>(static_cast<std::stringstream&>(std::stringstream() << std::ifstream(path).rdbuf()).str());
-        }
+        shader<S> shader_from_file(const std::string& path) { return shader<S>(static_cast<std::stringstream&>(std::stringstream() << std::ifstream(path).rdbuf()).str()); }
     }
 }

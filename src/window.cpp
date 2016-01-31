@@ -19,9 +19,7 @@
 
 using namespace tppi;
 
-struct glfw_window_deleter {
-    void operator()(GLFWwindow* glfw_window) { glfwDestroyWindow(glfw_window); }
-};
+struct glfw_window_deleter { void operator()(GLFWwindow* glfw_window) { glfwDestroyWindow(glfw_window); } };
 
 class window::window_impl {
 public:
