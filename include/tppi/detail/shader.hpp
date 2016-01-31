@@ -44,7 +44,7 @@ namespace tppi {
 
                 if (log_length > 1) {
                     info_log_.reserve(log_length);
-                    glGetShaderInfoLog(shader_handle, log_length, &log_length, &info_log_[0]);
+                    glGetShaderInfoLog(shader_handle, log_length, &log_length, &info_log_.front());
                 }
             }
 
