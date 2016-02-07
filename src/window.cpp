@@ -23,7 +23,7 @@ struct glfw_window_deleter { void operator()(GLFWwindow* glfw_window) { glfwDest
 
 class window::window_impl {
 public:
-    window_impl(unsigned int width, unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) {
+    window_impl(const unsigned int width, const unsigned int height, const std::string& title, const window_mode window_mode_, const resizable resizable_) {
         if (!glfwInit()) throw std::runtime_error("Failed to initialize GLFW.");
 
         glfwSetWindowUserPointer(glfw_window.get(), this);
@@ -61,10 +61,10 @@ public:
         glfwSetWindowFocusCallback(glfw_window.get(), set_focused);
     }
 
-    void resize(unsigned int width, unsigned int height) noexcept { glfwSetWindowSize(glfw_window.get(), width, height); }
+    void resize(const unsigned int width, const unsigned int height) noexcept { glfwSetWindowSize(glfw_window.get(), width, height); }
     void title(const std::string& new_title) { glfwSetWindowTitle(glfw_window.get(), new_title.c_str()); }
 
-    bool button_is_pressed(unsigned int key) const noexcept { return glfwGetKey(glfw_window.get(), key); }
+    bool button_is_pressed(const unsigned int key) const noexcept { return glfwGetKey(glfw_window.get(), key); }
 
     double scroll_offset() const noexcept { return scroll_offset_; }
     bool focused() const noexcept { return focused_; }
@@ -76,20 +76,21 @@ public:
         return cursor_pos_;
     }
 
-    void cursor_position(cursor_pos cursor_pos_) noexcept { glfwSetCursorPos(glfw_window.get(), cursor_pos_.x, cursor_pos_.y); }
+    void cursor_position(const cursor_pos cursor_pos_) noexcept { glfwSetCursorPos(glfw_window.get(), cursor_pos_.x, cursor_pos_.y); }
 
     std::string clipboard_string() { return glfwGetClipboardString(glfw_window.get()); }
     void clipboard_string(const std::string& new_clipboard_string) { glfwSetClipboardString(glfw_window.get(), new_clipboard_string.c_str()); }
 private:
     std::unique_ptr<GLFWwindow, glfw_window_deleter> glfw_window;
 
-    static void set_scroll_offset(GLFWwindow* window_ptr, double new_scroll_offset, double) noexcept { static_cast<window_impl*>(glfwGetWindowUserPointer(window_ptr))->scroll_offset_ = new_scroll_offset; }
-    static void set_focused(GLFWwindow* window_ptr, int is_window_in_focus) { static_cast<window_impl*>(glfwGetWindowUserPointer(window_ptr))->focused_ = is_window_in_focus; }
+    static void set_scroll_offset(GLFWwindow* window_ptr, const double new_scroll_offset, double) noexcept { static_cast<window_impl*>(glfwGetWindowUserPointer(window_ptr))->scroll_offset_ = new_scroll_offset; }
+    static void set_focused(GLFWwindow* window_ptr, const int is_window_in_focus) { static_cast<window_impl*>(glfwGetWindowUserPointer(window_ptr))->focused_ = is_window_in_focus; }
+
     double scroll_offset_ = 0;
     bool focused_ = false;
 };
 
-window::window(unsigned int width, unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) : window_impl_(std::make_unique<window_impl>(width, height, title, window_mode_, resizable_)) {
+window::window(const unsigned int width, const unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) : window_impl_(std::make_unique<window_impl>(width, height, title, window_mode_, resizable_)) {
     if (reference_count > 0) throw std::runtime_error("Multiple windows aren't yet supported.");
 
     ++reference_count;
@@ -108,10 +109,10 @@ void window::make_current() noexcept {
     current_window.reset(this);
 }
 
-void window::resize(unsigned int width, unsigned int height) noexcept { window_impl_->resize(width, height); }
+void window::resize(const unsigned int width, const unsigned int height) noexcept { window_impl_->resize(width, height); }
 void window::title(const std::string& new_title) { window_impl_->title(new_title); }
 
-bool window::button_is_pressed(button button_) const noexcept { return window_impl_->button_is_pressed(static_cast<unsigned int>(button_)); }
+bool window::button_is_pressed(const button button_) const noexcept { return window_impl_->button_is_pressed(static_cast<unsigned int>(button_)); }
 
 double window::scroll_offset() const noexcept { return window_impl_->scroll_offset(); }
 bool window::focused() const noexcept { return window_impl_->focused(); }

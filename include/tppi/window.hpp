@@ -169,20 +169,20 @@ namespace tppi {
 
     class window {
     public:
-        window(unsigned int width, unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_);
+        window(const unsigned int width, const unsigned int height, const std::string& title, const window_mode window_mode_, const resizable resizable_);
         ~window();
 
         void make_current() noexcept;
-        void resize(unsigned int width, unsigned int height) noexcept;
+        void resize(const unsigned int width, const unsigned int height) noexcept;
         void title(const std::string& new_title);
 
-        bool button_is_pressed(button button_) const noexcept;
+        bool button_is_pressed(const button button_) const noexcept;
 
         double scroll_offset() const noexcept;
         bool focused() const noexcept;
 
         cursor_pos cursor_position() const noexcept;
-        void cursor_position(cursor_pos cursor_pos_) noexcept;
+        void cursor_position(const cursor_pos cursor_pos_) noexcept;
 
         std::string clipboard_string();
         void clipboard_string(const std::string& new_clipboard_string);
