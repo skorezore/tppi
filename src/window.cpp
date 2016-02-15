@@ -23,9 +23,9 @@ struct glfw_window_deleter {
     void operator()(GLFWwindow* glfw_window) { glfwDestroyWindow(glfw_window); }
 };
 
-class window::window_impl {
+class window::window_implementation {
 public:
-    window_impl(const unsigned int width, const unsigned int height, const std::string& title, const window_mode window_mode_, const resizable resizable_) {
+    window_implementation(const unsigned int width, const unsigned int height, const std::string& title, const window_mode window_mode_, const resizable resizable_) {
         if (!glfwInit()) throw std::runtime_error("Failed to initialize GLFW.");
 
         glfwSetWindowUserPointer(glfw_window.get(), this);
@@ -51,7 +51,7 @@ public:
         if (!tdpiLoadGL()) throw std::runtime_error("Failed to load OpenGL functions.");
     }
 
-    ~window_impl() {
+    ~window_implementation() {
         glfwSetScrollCallback(glfw_window.get(), nullptr);
         glfwSetWindowFocusCallback(glfw_window.get(), nullptr);
     }
@@ -85,14 +85,14 @@ public:
 private:
     std::unique_ptr<GLFWwindow, glfw_window_deleter> glfw_window;
 
-    static void set_scroll_offset(GLFWwindow* window_ptr, const double new_scroll_offset, double) noexcept { static_cast<window_impl*>(glfwGetWindowUserPointer(window_ptr))->scroll_offset_ = new_scroll_offset; }
-    static void set_focused(GLFWwindow* window_ptr, const int is_window_in_focus) { static_cast<window_impl*>(glfwGetWindowUserPointer(window_ptr))->focused_ = is_window_in_focus; }
+    static void set_scroll_offset(GLFWwindow* window_ptr, const double new_scroll_offset, double) noexcept { static_cast<window_implementation*>(glfwGetWindowUserPointer(window_ptr))->scroll_offset_ = new_scroll_offset; }
+    static void set_focused(GLFWwindow* window_ptr, const int is_window_in_focus) { static_cast<window_implementation*>(glfwGetWindowUserPointer(window_ptr))->focused_ = is_window_in_focus; }
 
     double scroll_offset_ = 0;
     bool focused_ = false;
 };
 
-window::window(const unsigned int width, const unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) : window_impl_(std::make_unique<window_impl>(width, height, title, window_mode_, resizable_)) {
+window::window(const unsigned int width, const unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) : window_implementation_(std::make_unique<window_implementation>(width, height, title, window_mode_, resizable_)) {
     if (reference_count > 0) throw std::runtime_error("Multiple windows aren't yet supported.");
 
     ++reference_count;
@@ -107,23 +107,23 @@ window::~window() {
 }
 
 void window::make_current() noexcept {
-    window_impl_->make_current();
+    window_implementation_->make_current();
     current_window.reset(this);
 }
 
-void window::resize(const unsigned int width, const unsigned int height) noexcept { window_impl_->resize(width, height); }
-void window::title(const std::string& new_title) { window_impl_->title(new_title); }
+void window::resize(const unsigned int width, const unsigned int height) noexcept { window_implementation_->resize(width, height); }
+void window::title(const std::string& new_title) { window_implementation_->title(new_title); }
 
-bool window::button_is_pressed(const button button_) const noexcept { return window_impl_->button_is_pressed(static_cast<unsigned int>(button_)); }
+bool window::button_is_pressed(const button button_) const noexcept { return window_implementation_->button_is_pressed(static_cast<unsigned int>(button_)); }
 
-double window::scroll_offset() const noexcept { return window_impl_->scroll_offset(); }
-bool window::focused() const noexcept { return window_impl_->focused(); }
+double window::scroll_offset() const noexcept { return window_implementation_->scroll_offset(); }
+bool window::focused() const noexcept { return window_implementation_->focused(); }
 
-cursor_pos window::cursor_position() const noexcept { return window_impl_->cursor_position(); }
-void window::cursor_position(cursor_pos cursor_pos_) noexcept { window_impl_->cursor_position(cursor_pos_); }
+cursor_pos window::cursor_position() const noexcept { return window_implementation_->cursor_position(); }
+void window::cursor_position(cursor_pos cursor_pos_) noexcept { window_implementation_->cursor_position(cursor_pos_); }
 
-std::string window::clipboard_string() { return window_impl_->clipboard_string(); }
-void window::clipboard_string(const std::string& new_clipboard_string) { window_impl_->clipboard_string(new_clipboard_string); }
+std::string window::clipboard_string() { return window_implementation_->clipboard_string(); }
+void window::clipboard_string(const std::string& new_clipboard_string) { window_implementation_->clipboard_string(new_clipboard_string); }
 
 unsigned int window::reference_count = 0;
 std::unique_ptr<window> window::current_window = nullptr;
