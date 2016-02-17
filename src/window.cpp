@@ -25,7 +25,7 @@ struct glfw_window_deleter {
 
 class window::window_implementation {
 public:
-    window_implementation(const unsigned int width, const unsigned int height, const std::string& title, const window_mode window_mode_, const resizable resizable_) {
+    window_implementation(const unsigned int width, const unsigned int height, const std::string& title, const window_mode window_mode_, const resizable resizable_) : glfw_window(nullptr), scroll_offset_(0), focused_(false) {
         if (!glfwInit()) throw std::runtime_error("Failed to initialize GLFW.");
 
         glfwSetWindowUserPointer(glfw_window.get(), this);
@@ -95,8 +95,8 @@ private:
     static void set_scroll_offset(GLFWwindow* window_ptr, const double new_scroll_offset, double) noexcept { static_cast<window_implementation*>(glfwGetWindowUserPointer(window_ptr))->scroll_offset_ = new_scroll_offset; }
     static void set_focused(GLFWwindow* window_ptr, const int is_window_in_focus) { static_cast<window_implementation*>(glfwGetWindowUserPointer(window_ptr))->focused_ = is_window_in_focus; }
 
-    double scroll_offset_ = 0;
-    bool focused_ = false;
+    double scroll_offset_;
+    bool focused_;
 };
 
 window::window(const unsigned int width, const unsigned int height, const std::string& title, window_mode window_mode_, resizable resizable_) : window_implementation_(std::make_unique<window_implementation>(width, height, title, window_mode_, resizable_)) {
