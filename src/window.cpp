@@ -66,19 +66,26 @@ public:
     void resize(const unsigned int width, const unsigned int height) noexcept { glfwSetWindowSize(glfw_window.get(), width, height); }
     void title(const std::string& new_title) { glfwSetWindowTitle(glfw_window.get(), new_title.c_str()); }
 
+    void update() noexcept {
+        glfwPollEvents();
+        glfwSwapBuffers(glfw_window.get());
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
+
     bool button_is_pressed(const unsigned int key) const noexcept { return glfwGetKey(glfw_window.get(), key); }
 
     double scroll_offset() const noexcept { return scroll_offset_; }
     bool focused() const noexcept { return focused_; }
 
-    cursor_pos cursor_position() const noexcept {
-        cursor_pos cursor_pos_{0, 0};
-        glfwGetCursorPos(glfw_window.get(), &cursor_pos_.x, &cursor_pos_.y);
+    coordinate_2d cursor_position() const noexcept {
+        coordinate_2d new_position{0, 0};
+        glfwGetCursorPos(glfw_window.get(), &new_position.x, &new_position.y);
 
-        return cursor_pos_;
+        return new_position;
     }
 
-    void cursor_position(const cursor_pos cursor_pos_) noexcept { glfwSetCursorPos(glfw_window.get(), cursor_pos_.x, cursor_pos_.y); }
+    void cursor_position(const coordinate_2d new_position) noexcept { glfwSetCursorPos(glfw_window.get(), new_position.x, new_position.y); }
 
     std::string clipboard_string() { return glfwGetClipboardString(glfw_window.get()); }
     void clipboard_string(const std::string& new_clipboard_string) { glfwSetClipboardString(glfw_window.get(), new_clipboard_string.c_str()); }
@@ -114,16 +121,20 @@ void window::make_current() noexcept {
 void window::resize(const unsigned int width, const unsigned int height) noexcept { window_implementation_->resize(width, height); }
 void window::title(const std::string& new_title) { window_implementation_->title(new_title); }
 
+void window::update() noexcept { window_implementation_->update(); }
+
 bool window::button_is_pressed(const button button_) const noexcept { return window_implementation_->button_is_pressed(static_cast<unsigned int>(button_)); }
 
 double window::scroll_offset() const noexcept { return window_implementation_->scroll_offset(); }
 bool window::focused() const noexcept { return window_implementation_->focused(); }
 
-cursor_pos window::cursor_position() const noexcept { return window_implementation_->cursor_position(); }
-void window::cursor_position(cursor_pos cursor_pos_) noexcept { window_implementation_->cursor_position(cursor_pos_); }
+coordinate_2d window::cursor_position() const noexcept { return window_implementation_->cursor_position(); }
+void window::cursor_position(const coordinate_2d& new_position) noexcept { window_implementation_->cursor_position(new_position); }
 
-std::string window::clipboard_string() { return window_implementation_->clipboard_string(); }
+std::string window::clipboard_string() const { return window_implementation_->clipboard_string(); }
 void window::clipboard_string(const std::string& new_clipboard_string) { window_implementation_->clipboard_string(new_clipboard_string); }
+
+int window::count() noexcept { return reference_count; }
 
 unsigned int window::reference_count = 0;
 std::unique_ptr<window> window::current_window = nullptr;

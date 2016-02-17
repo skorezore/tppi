@@ -47,4 +47,5 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/deps/tdpi)
 target_link_libraries(tppi tdpi)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/deps/tinyobjloader)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/deps/tinyobjloader)
 target_link_libraries(tppi tinyobjloader)

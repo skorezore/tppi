@@ -15,11 +15,14 @@
 #include <utility>
 
 #include "tppi/detail/glsl_program.hpp"
+#include "tppi/window.hpp"
 
 using namespace tppi;
 using namespace tppi::detail;
 
 glsl_program::glsl_program(const vertex_shader& vertex_shader_, const fragment_shader& fragment_shader_, const std::vector<std::string>& attributes) : program_handle(glCreateProgram()), link_status(GL_FALSE), info_log_(), vertex_shader_info_log(vertex_shader_.info_log()), fragment_shader_info_log(fragment_shader_.info_log()) {
+    if (window::count() == 0) throw std::runtime_error("A window must be created prior to an instantiation of a 'glsl_program' object.");
+
     glAttachShader(program_handle, vertex_shader_);
     glAttachShader(program_handle, fragment_shader_);
 
@@ -55,7 +58,7 @@ glsl_program::operator GLuint() const noexcept { return program_handle; }
 
 const std::string& glsl_program::info_log() const noexcept { return info_log_; }
 
-const std::string& glsl_program::shader_info_log(shader_type type) const {
+const std::string& glsl_program::shader_info_log(shader_type type) const noexcept {
     switch (type) {
         case shader_type::vertex: return vertex_shader_info_log;
         case shader_type::fragment: return fragment_shader_info_log;

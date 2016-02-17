@@ -32,7 +32,7 @@ namespace tppi {
             operator GLuint() const noexcept;
 
             const std::string& info_log() const noexcept;
-            const std::string& shader_info_log(shader_type type) const;
+            const std::string& shader_info_log(shader_type type) const noexcept;
 
             void bind() noexcept;
         private:

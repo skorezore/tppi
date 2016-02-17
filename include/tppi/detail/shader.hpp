@@ -13,11 +13,14 @@
 #pragma once
 
 #include <fstream>
+#include <stdexcept>
 #include <sstream>
 #include <string>
 #include <utility>
 
 #include <tdpi/tdpi.h>
+
+#include "tppi/window.hpp"
 
 namespace tppi {
     namespace detail {
@@ -30,6 +33,8 @@ namespace tppi {
         class shader {
         public:
             shader(const std::string& shader_source) : shader_handle(0), compile_status(GL_FALSE) {
+                if (window::count() == 0) throw std::runtime_error("A window must be created prior to an instantiation of a 'shader' object.");
+
                 shader_handle = glCreateShader(static_cast<GLenum>(S));
 
                 const char* shader_source_c_str = shader_source.c_str();
@@ -68,8 +73,5 @@ namespace tppi {
 
         using vertex_shader = shader<shader_type::vertex>;
         using fragment_shader = shader<shader_type::fragment>;
-
-        template<shader_type S>
-        shader<S> shader_from_file(const std::string& path) { return shader<S>(static_cast<std::stringstream&>(std::stringstream() << std::ifstream(path).rdbuf()).str()); }
     }
 }

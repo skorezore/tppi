@@ -12,7 +12,12 @@
 
 #pragma once
 
-#include "tppi/pods.hpp"
-#include "tppi/renderable.hpp"
-#include "tppi/renderer.hpp"
-#include "tppi/window.hpp"
+#include <string>
+
+namespace tppi {
+    namespace detail {
+        namespace utility {
+            std::string file_to_string(const std::string& path);
+        }
+    }
+}

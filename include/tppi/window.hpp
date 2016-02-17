@@ -16,6 +16,8 @@
 #include <memory>
 #include <string>
 
+#include "tppi/pods.hpp"
+
 namespace tppi {
     enum class button : unsigned int {
         keyboard_space = 32,
@@ -163,10 +165,6 @@ namespace tppi {
         no = false
     };
 
-    struct cursor_pos {
-        double x, y;
-    };
-
     class window {
     public:
         window(const unsigned int width, const unsigned int height, const std::string& title, const window_mode window_mode_, const resizable resizable_);
@@ -176,16 +174,20 @@ namespace tppi {
         void resize(const unsigned int width, const unsigned int height) noexcept;
         void title(const std::string& new_title);
 
+        void update() noexcept;
+
         bool button_is_pressed(const button button_) const noexcept;
 
         double scroll_offset() const noexcept;
         bool focused() const noexcept;
 
-        cursor_pos cursor_position() const noexcept;
-        void cursor_position(const cursor_pos cursor_pos_) noexcept;
+        coordinate_2d cursor_position() const noexcept;
+        void cursor_position(const coordinate_2d& new_position) noexcept;
 
-        std::string clipboard_string();
+        std::string clipboard_string() const;
         void clipboard_string(const std::string& new_clipboard_string);
+
+        static int count() noexcept;
     private:
         class window_implementation;
         std::unique_ptr<window_implementation> window_implementation_;

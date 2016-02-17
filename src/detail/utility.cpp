@@ -10,9 +10,11 @@
   \_.-._  __...___.._______/
         ~~                   */
 
-#pragma once
+#include <fstream>
+#include <sstream>
 
-#include "tppi/pods.hpp"
-#include "tppi/renderable.hpp"
-#include "tppi/renderer.hpp"
-#include "tppi/window.hpp"
+#include "tppi/detail/utility.hpp"
+
+using namespace tppi::detail::utility;
+
+std::string file_to_string(const std::string& path) { return static_cast<std::stringstream&>(std::stringstream() << std::ifstream(path).rdbuf()).str(); } // Gotta love this atrocity.
