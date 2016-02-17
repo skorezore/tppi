@@ -17,10 +17,11 @@
 #include "tppi/window.hpp"
 
 using namespace tppi;
+using namespace tppi::detail;
 
 class renderable::renderable_implementation {
 public:
-    renderable_implementation(const std::string& path) : load_status(tinyobj::LoadObj(shapes, materials, error_string_, detail::utility::file_to_string(path).c_str())) {
+    renderable_implementation(const std::string& path) : load_status(tinyobj::LoadObj(shapes, materials, error_string_, utility::file_to_string(path).c_str())) {
         if (window::count() == 0) throw std::runtime_error("A window must be created prior to an instantiation of a 'renderable' object.");
     }
 
