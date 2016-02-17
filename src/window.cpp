@@ -78,14 +78,14 @@ public:
     double scroll_offset() const noexcept { return scroll_offset_; }
     bool focused() const noexcept { return focused_; }
 
-    coordinate_2d cursor_position() const noexcept {
-        coordinate_2d new_position{0, 0};
+    vec2 cursor_position() const noexcept {
+        vec2 new_position{0, 0};
         glfwGetCursorPos(glfw_window.get(), &new_position.x, &new_position.y);
 
         return new_position;
     }
 
-    void cursor_position(const coordinate_2d new_position) noexcept { glfwSetCursorPos(glfw_window.get(), new_position.x, new_position.y); }
+    void cursor_position(const vec2 new_position) noexcept { glfwSetCursorPos(glfw_window.get(), new_position.x, new_position.y); }
 
     std::string clipboard_string() { return glfwGetClipboardString(glfw_window.get()); }
     void clipboard_string(const std::string& new_clipboard_string) { glfwSetClipboardString(glfw_window.get(), new_clipboard_string.c_str()); }
@@ -128,8 +128,8 @@ bool window::button_is_pressed(const button button_) const noexcept { return win
 double window::scroll_offset() const noexcept { return window_implementation_->scroll_offset(); }
 bool window::focused() const noexcept { return window_implementation_->focused(); }
 
-coordinate_2d window::cursor_position() const noexcept { return window_implementation_->cursor_position(); }
-void window::cursor_position(const coordinate_2d& new_position) noexcept { window_implementation_->cursor_position(new_position); }
+vec2 window::cursor_position() const noexcept { return window_implementation_->cursor_position(); }
+void window::cursor_position(const vec2& new_position) noexcept { window_implementation_->cursor_position(new_position); }
 
 std::string window::clipboard_string() const { return window_implementation_->clipboard_string(); }
 void window::clipboard_string(const std::string& new_clipboard_string) { window_implementation_->clipboard_string(new_clipboard_string); }

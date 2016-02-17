@@ -25,8 +25,8 @@ namespace tppi {
     public:
         renderable(const std::string& path);
 
-        const coordinate_3d& coordinates() const noexcept;
-        void coordinates(const coordinate_3d& new_coordinates) noexcept;
+        const vec3& coordinates() const noexcept;
+        void coordinates(const vec3& new_coordinates) noexcept;
 
         operator bool() const noexcept;
         const std::string& error_string() const noexcept;
@@ -37,6 +37,6 @@ namespace tppi {
         std::unique_ptr<renderable_implementation> renderable_implementation_;
 
         std::vector<shape_t> shapes;
-        std::vector<material_t> materials; 
+        std::vector<material_t> materials;
     };
 }

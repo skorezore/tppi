@@ -17,8 +17,9 @@
 #include <vector>
 
 namespace tppi {
-    struct coordinate_2d { double x, y; };
-    struct coordinate_3d { double x, y, z; };
+    struct vec2 { double x, y; };
+    struct vec3 { double x, y, z; };
+    struct vec4 { double x, y, z, w; }
 
     struct material_t {
         std::string name;

@@ -181,8 +181,8 @@ namespace tppi {
         double scroll_offset() const noexcept;
         bool focused() const noexcept;
 
-        coordinate_2d cursor_position() const noexcept;
-        void cursor_position(const coordinate_2d& new_position) noexcept;
+        vec2 cursor_position() const noexcept;
+        void cursor_position(const vec2& new_position) noexcept;
 
         std::string clipboard_string() const;
         void clipboard_string(const std::string& new_clipboard_string);
